@@ -36,8 +36,11 @@ parse_git_branch() {
 }
 PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H\[\e[0m\]:\[\e[0;38;5;51m\]\w \[\e[0;38;5;202m\]$(parse_git_branch)\[\e[0m\]\$ \[\e[0m\]'
 export EDITOR='nvim'
+NVIMCONF='$HOME/.config/nvim'
 
 # Custom aliases
 alias yt='youtube-dl --add-metadata'
 alias yta='yt -x -f bestaudio/best'
+alias bu='$HOME/Programs/scripts/brightness_up.sh'
+alias bd='$HOME/Programs/scripts/brightness_down.sh'
 . "$HOME/.cargo/env"
