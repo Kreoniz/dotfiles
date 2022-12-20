@@ -44,3 +44,7 @@ alias yta='yt -x -f bestaudio/best'
 alias bu='$HOME/Programs/scripts/brightness_up.sh'
 alias bd='$HOME/Programs/scripts/brightness_down.sh'
 . "$HOME/.cargo/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
