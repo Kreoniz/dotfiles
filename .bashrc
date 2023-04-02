@@ -44,6 +44,7 @@ alias yta='yt -x -f bestaudio/best'
 alias bu='$HOME/Programs/scripts/brightness_up.sh'
 alias bd='$HOME/Programs/scripts/brightness_down.sh'
 alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
+alias rm="rm -i"
 . "$HOME/.cargo/env"
 
 export NVM_DIR="$HOME/.nvm"
