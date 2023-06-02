@@ -45,7 +45,7 @@ alias bu='$HOME/Programs/scripts/brightness_up.sh'
 alias bd='$HOME/Programs/scripts/brightness_down.sh'
 alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
 alias rm="rm -i"
-. "$HOME/.cargo/env"
+alias ls="ls --color=auto"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
