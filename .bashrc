@@ -44,6 +44,7 @@ alias yta='yt -x -f bestaudio/best'
 alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
 alias rm="rm -i"
 alias ls="ls --color=auto"
+alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -61,3 +62,5 @@ case ":$PATH:" in
 esac
 # pnpm end
 [ -f "/home/kreoniz/.ghcup/env" ] && source "/home/kreoniz/.ghcup/env" # ghcup-env
+export QT_QPA_PLATFORMTHEME=qt5ct
+. "$HOME/.cargo/env"

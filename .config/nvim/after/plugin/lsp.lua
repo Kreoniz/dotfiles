@@ -6,6 +6,8 @@ lsp.ensure_installed({
     'eslint',
 })
 
+vim.keymap.set('n', '<Leader>e', function() vim.diagnostic.open_float(0, {scope="line"}) end)
+
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
