@@ -45,6 +45,7 @@ alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
 alias rm="rm -i"
 alias ls="ls --color=auto"
 alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
+alias gg="git log --oneline --graph"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -64,3 +65,5 @@ esac
 [ -f "/home/kreoniz/.ghcup/env" ] && source "/home/kreoniz/.ghcup/env" # ghcup-env
 export QT_QPA_PLATFORMTHEME=qt5ct
 . "$HOME/.cargo/env"
+eval "$(thefuck --alias)"
+eval $(thefuck --alias damn)
