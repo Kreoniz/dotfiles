@@ -46,6 +46,7 @@ alias rm="rm -i"
 alias ls="ls --color=auto"
 alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
 alias gg="git log --oneline --graph"
+alias Wg++="g++ -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -Werror -std=c++23"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
