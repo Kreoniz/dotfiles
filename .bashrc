@@ -45,7 +45,7 @@ alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
 alias rm="rm -i"
 alias ls="ls --color=auto"
 alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
-alias gg="git log --oneline --graph"
+alias gg="git log --oneline --graph --all"
 alias Wg++="g++ -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -Werror -std=c++23"
 
 export NVM_DIR="$HOME/.nvm"
