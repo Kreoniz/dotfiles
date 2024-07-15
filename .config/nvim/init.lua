@@ -916,13 +916,6 @@ require('lazy').setup({
       require('colorizer').setup()
     end,
   },
-  {
-    'themaxmarchuk/tailwindcss-colors.nvim',
-    event = 'BufEnter',
-    config = function()
-      require('tailwindcss-colors').setup()
-    end,
-  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
