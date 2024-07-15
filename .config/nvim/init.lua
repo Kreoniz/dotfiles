@@ -909,6 +909,20 @@ require('lazy').setup({
     'Exafunction/codeium.vim',
     event = 'BufEnter',
   },
+  {
+    'norcalli/nvim-colorizer.lua',
+    event = 'BufEnter',
+    config = function()
+      require('colorizer').setup()
+    end,
+  },
+  {
+    'themaxmarchuk/tailwindcss-colors.nvim',
+    event = 'BufEnter',
+    config = function()
+      require('tailwindcss-colors').setup()
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
