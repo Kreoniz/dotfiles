@@ -47,6 +47,7 @@ alias ls="ls --color=auto"
 alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
 alias gg="git log --oneline --graph --all"
 alias Wg++="g++ -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -Werror -std=c++23"
+alias zen="flatpak run io.github.zen_browser.zen"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

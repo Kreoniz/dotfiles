@@ -905,10 +905,13 @@ require('lazy').setup({
 
   -- import = 'custom.plugins',
 
+  --[[
   {
     'Exafunction/codeium.vim',
     event = 'BufEnter',
   },
+  ]]
+  --
   {
     'norcalli/nvim-colorizer.lua',
     event = 'BufEnter',
