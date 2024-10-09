@@ -4,7 +4,7 @@
 -- See the kickstart.nvim README for more information
 return {
   'norcalli/nvim-colorizer.lua',
-  event = { 'BufReadPre', 'BufNewFile' }, -- Load on specific events
+  event = { 'BufReadPre', 'BufNewFile', 'BufNew' }, -- Load on specific events
   config = function()
     require('colorizer').setup {
       scss = { css = true, css_fn = true },
