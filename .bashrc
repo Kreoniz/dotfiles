@@ -32,7 +32,12 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+        local branch_name=$(git branch --show-current 2>/dev/null)
+        if [ -n "$branch_name" ]; then
+            echo "(${branch_name})"
+        fi
+    fi
 }
 PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H\[\e[0m\]:\[\e[0;38;5;51m\]\w \[\e[0;38;5;202m\]$(parse_git_branch)\[\e[0m\]\$ \[\e[0m\]'
 export EDITOR='nvim'
@@ -45,9 +50,12 @@ alias upd='sudo dnf check-update --refresh; sudo dnf upgrade -y; flatpak update'
 alias rm="rm -i"
 alias ls="ls --color=auto"
 alias code="code --enable-features=UseOzonePlatform --ozone-platform=wayland"
+alias gl="git log --oneline"
+alias ggc="git log --oneline --graph"
 alias gg="git log --oneline --graph --all"
 alias Wg++="g++ -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -Werror -std=c++23"
 alias zen="flatpak run io.github.zen_browser.zen"
+alias drmex="docker rm $(docker ps -a -q -f status=exited)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -69,3 +77,10 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 . "$HOME/.cargo/env"
 eval "$(thefuck --alias)"
 eval $(thefuck --alias damn)
+
+# export TERM="screen-256color"
+export TERM="tmux-256color"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

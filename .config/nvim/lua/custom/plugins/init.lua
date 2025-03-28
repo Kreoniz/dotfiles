@@ -3,13 +3,21 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'norcalli/nvim-colorizer.lua',
-  event = { 'BufReadPre', 'BufNewFile', 'BufNew' }, -- Load on specific events
-  config = function()
-    require('colorizer').setup {
-      scss = { css = true, css_fn = true },
-      css = { css = true, css_fn = true, rgb_fn = true },
-      html = { rgb_fn = true },
-    }
-  end,
+  {
+    'norcalli/nvim-colorizer.lua',
+    event = { 'BufReadPre', 'BufNewFile', 'BufNew' }, -- Load on specific events
+    config = function()
+      require('colorizer').setup {
+        scss = { css = true, css_fn = true },
+        css = { css = true, css_fn = true, rgb_fn = true },
+        vue = { css = true, css_fn = true, rgb_fn = true },
+        html = { rgb_fn = true },
+      }
+    end,
+  },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
 }
