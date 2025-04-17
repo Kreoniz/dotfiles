@@ -55,7 +55,6 @@ alias ggc="git log --oneline --graph"
 alias gg="git log --oneline --graph --all"
 alias Wg++="g++ -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -Werror -std=c++23"
 alias zen="flatpak run io.github.zen_browser.zen"
-alias drmex="docker rm $(docker ps -a -q -f status=exited)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -84,3 +83,5 @@ export TERM="tmux-256color"
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
+
+export PATH=$PATH:/usr/local/go/bin
