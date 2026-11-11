@@ -1,98 +1,55 @@
-# .bashrc
+# Fedora supplies history, completion, and terminal-title integration.
+[[ ! -r /etc/bashrc ]] || . /etc/bashrc
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
+# Bootstrap mise, then retain the existing local-tool and Vite+ precedence.
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash)"
 fi
+[[ ! -r "$HOME/.config/bash/env.sh" ]] || . "$HOME/.config/bash/env.sh"
+[[ ! -r "$HOME/.config/vite-plus/env" ]] || . "$HOME/.config/vite-plus/env"
 
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
-
-export EDITOR='nvim'
-export VISUAL='nvim'
-export GIT_EDITOR='nvim'
-
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
-# User specific aliases and functions
-if [ -d ~/.bashrc.d ]; then
-    for rc in ~/.bashrc.d/*; do
-        if [ -f "$rc" ]; then
-            . "$rc"
-        fi
+# Personal extensions remain supported.
+if [[ -d "$HOME/.bashrc.d" ]]; then
+    for rc in "$HOME"/.bashrc.d/*; do
+        [[ ! -f "$rc" ]] || . "$rc"
     done
+    unset rc
 fi
-unset rc
+[[ ! -r "$HOME/.config/bash/helpers.bash" ]] || . "$HOME/.config/bash/helpers.bash"
+alias rm='rm -i'
 
-__prompt_dir() {
+__prompt_update() {
+    local previous_status=$? ref env_name
     case "$PWD" in
-        "$HOME")
-            printf '~'
-            ;;
-        "$HOME"/*)
-            printf '~/%s' "${PWD#"$HOME"/}"
-            ;;
-        *)
-            printf '%s' "$PWD"
-            ;;
+        "$HOME") __prompt_path='~' ;;
+        "$HOME"/*) __prompt_path="~/${PWD#"$HOME"/}" ;;
+        *) __prompt_path=$PWD ;;
     esac
-}
-
-__prompt_git_suffix() {
-    local ref
-
-    ref=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null) || return
-    [ -n "$ref" ] && printf ' (%s)' "$ref"
-}
-
-__prompt_python_suffix() {
-    local env_name
-
-    if [ -n "$VIRTUAL_ENV" ]; then
-        env_name=${VIRTUAL_ENV##*/}
-    elif [ -n "$CONDA_DEFAULT_ENV" ]; then
-        env_name=$CONDA_DEFAULT_ENV
-    elif [ -n "$PYENV_VERSION" ]; then
-        env_name=$PYENV_VERSION
+    __prompt_git=
+    if ref=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null); then
+        __prompt_git=" ($ref)"
     fi
-
-    [ -n "$env_name" ] && printf ' (%s)' "$env_name"
-}
-
-__prompt_color() {
-    case "$1" in
-        black) printf '\\[\\e[30m\\]' ;;
-        red) printf '\\[\\e[31m\\]' ;;
-        green) printf '\\[\\e[32m\\]' ;;
-        yellow) printf '\\[\\e[33m\\]' ;;
-        blue) printf '\\[\\e[34m\\]' ;;
-        magenta) printf '\\[\\e[35m\\]' ;;
-        cyan) printf '\\[\\e[36m\\]' ;;
-        white) printf '\\[\\e[37m\\]' ;;
-        reset) printf '\\[\\e[0m\\]' ;;
-    esac
+    env_name=${VIRTUAL_ENV##*/}
+    env_name=${env_name:-${CONDA_DEFAULT_ENV:-${PYENV_VERSION:-}}}
+    __prompt_python=${env_name:+ ($env_name)}
+    return "$previous_status"
 }
 
 if [[ $- == *i* ]]; then
     export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-    prompt_path_color=$(__prompt_color green)
-    prompt_git_color=$(__prompt_color cyan)
-    prompt_python_color=$(__prompt_color yellow)
-    prompt_reset=$(__prompt_color reset)
-
-    PS1="${prompt_path_color}"'$(__prompt_dir)'"${prompt_git_color}"'$(__prompt_git_suffix)'"${prompt_python_color}"'$(__prompt_python_suffix)'"${prompt_reset}"' '
+    # Expand variables at display time; never evaluate branch names as shell code.
+    PS1='\[\e[32m\]${__prompt_path}\[\e[36m\]${__prompt_git}\[\e[33m\]${__prompt_python}\[\e[0m\] '
+    if [[ ${PROMPT_COMMAND@a} == *a* ]]; then
+        if [[ " ${PROMPT_COMMAND[*]} " != *' __prompt_update '* ]]; then
+            PROMPT_COMMAND+=(__prompt_update)
+        fi
+    elif [[ ";${PROMPT_COMMAND:-};" != *';__prompt_update;'* ]]; then
+        PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}__prompt_update"
+    fi
+    complete -o filenames -o nospace -F _cdw_complete cdw
 fi
-
-alias rm='rm -i'
-
-# fnm
-FNM_PATH="/home/kreoniz/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env --shell bash)"
-fi
+[[ ! -r "$HOME/.bashrc.local" ]] || . "$HOME/.bashrc.local"
